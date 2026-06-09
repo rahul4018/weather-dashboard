@@ -1,76 +1,34 @@
 # Weather Dashboard
 
-> A clean, responsive weather dashboard that fetches real-time data from a public weather API and displays it in a minimal, easy-to-read interface. Built with HTML, CSS, and TypeScript.
+A weather dashboard built with Next.js (App Router), TypeScript, and Tailwind CSS. Fetches current weather data from the OpenWeatherMap API and displays it in a clean, responsive interface.
 
 ---
 
 ## Overview
 
-A straightforward project with a focused scope: fetch live weather data, handle API state properly, and present it cleanly. No frameworks, no build complexity — just vanilla TypeScript compiled to the browser.
+This is a learning project for working with Next.js App Router conventions, TypeScript, and component-based UI via shadcn/ui. It fetches live weather data from a public API, handles loading and error states, and renders the result in a responsive layout.
 
 ---
 
 ## Features
 
-- **Current conditions** — temperature, feels-like, humidity, wind speed, weather description
-- **Search by city** — type any city name, get results instantly
-- **Unit toggle** — switch between Celsius and Fahrenheit
-- **Responsive layout** — works on mobile and desktop
-- **Loading and error states** — handled gracefully (no blank screens on failed requests)
+- Current weather conditions by city name: temperature, feels-like, humidity, wind speed, description
+- Unit toggle between Celsius and Fahrenheit
+- Loading and error states handled in the UI
+- Responsive layout via Tailwind CSS
 
 ---
 
 ## Tech Stack
 
-| Technology | Role |
-|---|---|
-| TypeScript | Application logic + API calls |
-| HTML5 | Markup |
-| CSS3 | Styling + responsive layout |
-| OpenWeatherMap API | Weather data source |
-
-No frameworks. No build tools beyond the TypeScript compiler. Intentionally minimal.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (for the TypeScript compiler)
-- A free [OpenWeatherMap API key](https://openweathermap.org/api)
-
-### Setup
-
-```bash
-git clone https://github.com/rahul4018/weather-dashboard.git
-cd weather-dashboard
-
-npm install
-```
-
-Add your API key. Create a `config.ts` file (or update the existing one):
-
-```typescript
-export const API_KEY = 'your_openweathermap_api_key_here';
-export const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-```
-
-### Build and run
-
-```bash
-# Compile TypeScript
-npx tsc
-
-# Open in browser
-open index.html
-```
-
-Or use a dev server:
-
-```bash
-npx serve .
-```
+| Technology      | Role                                         |
+|-----------------|----------------------------------------------|
+| Next.js 14      | Framework — App Router, server components    |
+| TypeScript      | Type safety across components and API layer  |
+| Tailwind CSS    | Styling and responsive layout                |
+| shadcn/ui       | UI component primitives                      |
+| OpenWeatherMap  | Weather data API (free tier)                 |
+| pnpm            | Package manager                              |
 
 ---
 
@@ -78,36 +36,66 @@ npx serve .
 
 ```
 weather-dashboard/
-├── src/
-│   ├── main.ts         # Entrypoint — event listeners, UI updates
-│   ├── api.ts          # API fetch functions
-│   ├── types.ts        # TypeScript interfaces for API responses
-│   └── config.ts       # API key and base URL
-├── dist/               # Compiled JS (generated)
-├── styles/
-│   └── main.css
-├── index.html
-├── tsconfig.json
-└── package.json
+├── app/              # Next.js App Router — pages and layouts
+├── components/       # React UI components (some via shadcn/ui)
+├── hooks/            # Custom React hooks (data fetching, state)
+├── lib/              # Utility functions, API client
+├── styles/           # Global CSS
+├── public/           # Static assets
+├── components.json   # shadcn/ui config
+├── next.config.mjs   # Next.js config
+└── tsconfig.json
 ```
 
 ---
 
-## Why TypeScript for a small project?
+## Setup
 
-A few reasons worth noting:
+### Prerequisites
 
-- The OpenWeatherMap API response is a deeply nested object. TypeScript interfaces make destructuring it safe — no silent `undefined` errors
-- The unit conversion logic (C ↔ F) is a good example of where typed functions prevent subtle bugs
-- It's good practice — even small projects benefit from the habit
+- Node.js 18+
+- pnpm (`npm install -g pnpm`)
+- An [OpenWeatherMap API key](https://openweathermap.org/api) (free tier)
+
+### Installation
+
+```bash
+git clone https://github.com/rahul4018/weather-dashboard.git
+cd weather-dashboard
+pnpm install
+```
+
+### Environment variables
+
+Create a `.env.local` file in the project root:
+
+```
+NEXT_PUBLIC_OPENWEATHER_API_KEY=your_api_key_here
+```
+
+### Run
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## API Usage
+## Testing
 
-This project uses the [OpenWeatherMap Current Weather API](https://openweathermap.org/current).
+No tests have been implemented.
 
-Free tier: 1,000 calls/day — more than enough for personal use.
+---
+
+## Limitations
+
+- No caching — each search triggers a fresh API call
+- No forecast data, only current conditions
+- No geolocation support; city search only
+- Free tier API key rate limits apply (60 calls/minute, 1,000,000/month)
+- No persistent state — search history is not saved between sessions
 
 ---
 
